@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo</title>
+
+</head>
+<body>
+
+    <input type="text" id="in">
+    <button id="add">Добавить</button>
+    <div id="out"></div>
+
+</body>
+
+<script>
+
+window.onload = function () {
+
+    var todoList = []; // создаем глобальный массив для хранения списка дел
+    if (localStorage.getItem('todo')!=undefined){
+        todoList = JSON.parse(localStorage.getItem('todo'));
+        out();
+    }
+
+    document.getElementById('out').onclick = function (event) {
+        if (event.target.className == 'che') {
+            check();
+        }
+    }
+
+    function check () {
+        var checkbox = document.getElementsByClassName('che');
+
+        for ( var i = 0; i < checkbox.length; i++ ) {
+            if ( checkbox[i].checked ) {
+                console.log(checkbox[i]);
+                todoList[i].check = true;
+            } else {
+                todoList[i].check = false;
+            }
+
+            localStorage.setItem('todo', JSON.stringify(todoList) );
+        }
+    }
+
+    // проверяем наличие данных в localStorage, если там есть список, тогда преобразуем в массив и запускаем функцию out
+
+    document.getElementById('add').onclick = function() {  // обрабатываем нажатие кнопки
+
+        var d = document.getElementById('in').value; // получаем значение из input'а
+        // добавляем дела в ассоциативный массив
+        var temp = {};
+        temp.todo = d;
+        temp.check = false;
+        var i = todoList.length; // создаем переменную i, равную длине массива todoList
+        todoList[i] = temp; // присваеваем к объекту temp
+        console.log(todoList);
+        out();
+        localStorage.setItem('todo', JSON.stringify(todoList)); // преобразуем массив todoList в строку
+    }
+
+    function out() { // функция, которая перебирает массив todoList и формирует строку для вывода в  div class="out"
+        var out = '';
+        for (var key in todoList){ // проверяем состояние
+            if (todoList[key].check == true) {
+                out += '<input type="checkbox" class="che" checked>';
+            }
+            else {
+                out += '<input type="checkbox" class="che">';
+            }
+            out += todoList[key].todo + '<br>'; // формируем список дел из ключа (имени дела) из массива todoList и знака переноса строки
+        }
+        document.getElementById('out').innerHTML = out; // отправляем значения в  div
+    }
+
+
+}
+
+
+
+</script>
+
+</html>
