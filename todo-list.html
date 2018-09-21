@@ -3,18 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Todo</title>
-
 </head>
 <body>
-
     <input type="text" id="in">
     <button id="add">Добавить</button>
     <div id="out"></div>
-
 </body>
 
 <script>
-
 window.onload = function () {
 
     var todoList = []; // создаем глобальный массив для хранения списка дел
@@ -31,7 +27,6 @@ window.onload = function () {
 
     function check () {
         var checkbox = document.getElementsByClassName('che');
-
         for ( var i = 0; i < checkbox.length; i++ ) {
             if ( checkbox[i].checked ) {
                 console.log(checkbox[i]);
@@ -39,7 +34,6 @@ window.onload = function () {
             } else {
                 todoList[i].check = false;
             }
-
             localStorage.setItem('todo', JSON.stringify(todoList) );
         }
     }
@@ -47,7 +41,6 @@ window.onload = function () {
     // проверяем наличие данных в localStorage, если там есть список, тогда преобразуем в массив и запускаем функцию out
 
     document.getElementById('add').onclick = function() {  // обрабатываем нажатие кнопки
-
         var d = document.getElementById('in').value; // получаем значение из input'а
         // добавляем дела в ассоциативный массив
         var temp = {};
@@ -73,12 +66,7 @@ window.onload = function () {
         }
         document.getElementById('out').innerHTML = out; // отправляем значения в  div
     }
-
-
 }
 
-
-
 </script>
-
 </html>
